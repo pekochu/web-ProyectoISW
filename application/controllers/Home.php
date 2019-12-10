@@ -9,6 +9,16 @@ class Home extends CI_Controller {
 	}
 
 	public function index()	{
-		$this->load->view('asd');
+		$session = array();
+		$session = $this->session->login;
+        $session['title'] = "Inicio";
+        $frontend = array();
+
+        // $nivel = $session['acceso_admin'];
+        # Vistas
+        $frontend['header'] = $this->load->view('layouts/header', $session, true);
+        $frontend['footer'] = $this->load->view('layouts/footer', $session, true);
+		
+		$this->load->view('home', $frontend);
 	}
 }
