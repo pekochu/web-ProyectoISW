@@ -29,9 +29,9 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Inicia sesión para entrar</p>
 
-      <form action="<?= base_url("login/signin") ?>" method="post">
+      <form action="<?= base_url("login") ?>" method="post">
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="Correo electrónico">
+          <input type="email" name="email" class="form-control" placeholder="Correo electrónico" value="<?= $this->input->post('email') ?>">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -46,6 +46,13 @@
             </div>
           </div>
         </div>
+        <?php if(strlen(validation_errors())):?>
+        <div class="row">
+          <div class="col-12">
+            <?= validation_errors('<div class="alert alert-danger" style="width:100%; text-align:center;">', '</div>') ?>
+          </div>
+        </div>
+        <?php endif; ?>
         <div class="row">
           <div class="col-7">
             <div class="icheck-primary">

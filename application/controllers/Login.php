@@ -9,19 +9,9 @@ class Login extends CI_Controller {
 	}
 
 	public function index() {
-		$this->load->view('login/self');
-	}
-
-	public function signin() {
-		$data = array();
-		if($this->session->login)
-			redirect('home', 'location');
-		
-		# Iniciar sesión
 		$email = $this->input->post('email');
-
 		if(!isset($email)){
-			echo 'Sin parametros';
+			$this->load->view('login/self');
 		}else{
 			$this->load->library('form_validation');
 
@@ -29,11 +19,12 @@ class Login extends CI_Controller {
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_check_database');
 
 			if(!$this->form_validation->run()){
-				echo 'Sesión iniciada';
+				$this->load->view('login/self');
 			}else{
-				echo 'Correo electrónico o contraseña incorrectas';
+				redirect('home', 'location');
 			}
 		}
+		
 	}
 
 	public function forgotten() {
@@ -61,7 +52,7 @@ class Login extends CI_Controller {
 			$this->session->login = $userMatch;
 			return true;
 		}else{
-			$this->form_validation->set_message('check_database', 'Usuario o contraseña incorrectos.');
+			$this->form_validation->set_message('check_database', 'Correo o contraseña incorrectos');
 			return false;
 		}
 	}
