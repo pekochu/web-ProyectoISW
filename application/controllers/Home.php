@@ -20,7 +20,7 @@ class Home extends CI_Controller {
 		$this->load->view('home', $frontend);
 	}
 
-	public function test(){
-		print_r($_SERVER);
+	public function info(){
+		echo phpinfo();
 	}
 }
