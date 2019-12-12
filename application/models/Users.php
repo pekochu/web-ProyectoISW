@@ -3,9 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 Class Users extends CI_Model{
 
     function matchUsuario($username){
-        $this->db->select('*');
+        $this->db->select('users.*, users_roles.*');
         $this->db->from('users');
         $this->db->where('email', $username);
+        $this->db->join('users_roles', 'users.user_role_id = id_user_role');
         $this->db->limit(1);
 
         $query = $this->db->get();

@@ -14,11 +14,13 @@ class Home extends CI_Controller {
         $session['title'] = "Inicio";
         $frontend = array();
 
-        // $nivel = $session['acceso_admin'];
+        $role = $session['user_role_id'];
         # Vistas
-        $frontend['header'] = $this->load->view('layouts/header', $session, true);
-        $frontend['footer'] = $this->load->view('layouts/footer', $session, true);
-		
+        $this->common->mostrarFrontend($role, $frontend, $session);
 		$this->load->view('home', $frontend);
+	}
+
+	public function test(){
+		print_r($_SERVER);
 	}
 }

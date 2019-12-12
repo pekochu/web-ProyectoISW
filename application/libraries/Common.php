@@ -8,68 +8,34 @@ class Common {
     function __construct(){
         $this->CI =& get_instance();
         $this->CI->load->helper('url');
-        $this->CI->load->library('session');
-    }
-
-    function mostrarHeader($nivel = '-1'){
-		switch (intval($nivel)) {
-			case 0:
-				return '/templates/headers/admin';
-				break;
-			case 1:
-				return '/templates/headers/dependencia';
-				break;
-			case 2:
-				return '/templates/headers/institucion';
-				break;
-			case 3:
-				return '/templates/headers/organizacion';
-				break;
-			case 4:
-				return '/templates/headers/asociado';
-				break;
-			default:
-				return '/templates/headers/desconocido';
-				break;
-		}
-		return false;
 	}
 	
-	function mostrarMenu($nivel = '-1'){
-		switch (intval($nivel)) {
-			case 0:
-				return '/templates/menus/admin';
-				break;
+	function mostrarFrontend($role = '-1', &$frontend, $data){
+		$header = $this->CI->load->view('layouts/header', $data, true);
+		switch (intval($role)) {
 			case 1:
-				return '/templates/menus/dependencia';
-				break;
+				$menu = $this->CI->load->view('/layouts/menus/administrador', $data, true);
+			break;
 			case 2:
-				return '/templates/menus/institucion';
-				break;
+				$menu = $this->CI->load->view('/layouts/menus/responsable', $data, true);
+			break;
 			case 3:
-				return '/templates/menus/organizacion';
-				break;
-			case 4:
-				return '/templates/menus/asociado';
-				break;
-			default:
-				return '/templates/menus/desconocido';
-				break;
+				$menu = $this->CI->load->view('/layouts/menus/instructor', $data, true);
+			break;
+			default: 
+				$menu = "";
+			break;
 		}
-		return false;
+		$topmenu = $this->CI->load->view('layouts/topmenu', ['menu' => $menu], true);
+		$footer = $this->CI->load->view('layouts/footer', $data, true);
+		$copyright = $this->CI->load->view('layouts/copyright', $data, true);
+		$frontend['header'] = $header;
+		$frontend['menu'] = $menu;
+		$frontend['topmenu'] = $topmenu;
+		$frontend['copyright'] = $copyright;
+		$frontend['footer'] = $footer;
 	}
-    
-    function mostrarFooter($nivel = '-1'){
-		switch (intval($nivel)) {
-            case -1:
-                return '/templates/footers/general';
-                break;
-			default:
-				return '/templates/footers/scripts';
-				break;
-		}
-		return '/templates/footers/general';
-	}
+
 
 	function restringirVista($restringir = array(-1), $nivel = -1){
 		foreach ($restringir as $value) {
